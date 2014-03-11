@@ -1,0 +1,9 @@
+Package: com.wujames.omnisearch
+Name: OmniSearch
+Depends: mobilesubstrate, preferenceloader, firmware (>= 7.0), am.theiostre.searchloader
+Version: 0.1
+Architecture: iphoneos-arm
+Description: Enhanced and customizable Spotlight search
+Maintainer: JW
+Author: JW
+Section: Tweak

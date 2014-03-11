@@ -1,0 +1,10 @@
+{
+	entry = {
+		bundle = OmniSearchPrefs;
+		cell = PSLinkCell;
+		detail = "OmniSearchPrefsListController";
+		icon = "OmniSearch-Icon.png";
+		isController = 1;
+		label = OmniSearch;
+	};
+}

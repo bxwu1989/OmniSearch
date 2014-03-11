@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Search Providers</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>Apple Maps</string>
+			<key>label</key>
+			<string>Apple Maps</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>Google Maps</string>
+			<key>label</key>
+			<string>Google Maps</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>Cydia</string>
+			<key>label</key>
+			<string>Cydia</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>Yelp</string>
+			<key>label</key>
+			<string>Yelp</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>Twitter</string>
+			<key>label</key>
+			<string>Twitter</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>Instagram Tag</string>
+			<key>label</key>
+			<string>Instagram Tag</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>Instagram User</string>
+			<key>label</key>
+			<string>Instagram User</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>App Store</string>
+			<key>label</key>
+			<string>App Store</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>iTunes</string>
+			<key>label</key>
+			<string>iTunes</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>IMDB</string>
+			<key>label</key>
+			<string>IMDB</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>eBay</string>
+			<key>label</key>
+			<string>eBay</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>Spotify</string>
+			<key>label</key>
+			<string>Spotify</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>Tumblr Tag</string>
+			<key>label</key>
+			<string>Tumblr Tag</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>Directions To (Apple Maps)</string>
+			<key>label</key>
+			<string>Directions To (Apple Maps)</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>Directions To (Google Maps)</string>
+			<key>label</key>
+			<string>Directions To (Google Maps)</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>Dictionary</string>
+			<key>label</key>
+			<string>Dictionary</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>Wikipedia</string>
+			<key>label</key>
+			<string>Wikipedia</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.wujames.omnisearchprefs</string>
+			<key>key</key>
+			<string>Foursquare</string>
+			<key>label</key>
+			<string>Foursquare</string>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>OmniSearch</string>
+</dict>
+</plist>
