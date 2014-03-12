@@ -1,7 +1,7 @@
 include theos/makefiles/common.mk
 
 BUNDLE_NAME = OmniSearchPrefs
-OmniSearchPrefs_FILES = OmniSearchPrefs.mm
+OmniSearchPrefs_FILES = SearchProviderTableViewController.m
 OmniSearchPrefs_INSTALL_PATH = /Library/PreferenceBundles
 OmniSearchPrefs_FRAMEWORKS = UIKit
 OmniSearchPrefs_PRIVATE_FRAMEWORKS = Preferences

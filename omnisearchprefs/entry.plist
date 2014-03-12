@@ -2,7 +2,7 @@
 	entry = {
 		bundle = OmniSearchPrefs;
 		cell = PSLinkCell;
-		detail = "OmniSearchPrefsListController";
+		detail = "SearchProviderTableViewController";
 		icon = "OmniSearch-Icon.png";
 		isController = 1;
 		label = OmniSearch;

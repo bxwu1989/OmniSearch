@@ -13,6 +13,9 @@
 #define GET_INT(key, default) (prefs[key] ? ((NSNumber *)prefs[key]).intValue : default)
 #define GET_STR(key, default) (prefs[key] ? prefs[key] : default)
 
+#define ALL_SEARCH_PROVIDERS_PLIST @"Library/SearchLoader/Preferences/SearchProviders.plist"
+#define SAVED_PREFERENCES_PLIST @"/var/mobile/Library/Preferences/com.wujames.omnisearchprefs.plist"
+
 @interface TLOmniSearchDatastore : NSObject <TLSearchDatastore> {
     BOOL $usingInternet;
 }
@@ -21,23 +24,24 @@
 @implementation TLOmniSearchDatastore
 - (void)performQuery:(SDSearchQuery *)query withResultsPipe:(SDSearchQuery *)results {
     
+    NSMutableArray *searchResults = [NSMutableArray array];
+    
     /** Load the all preconfigured search providers */
     NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:@"/Library/SearchLoader/Preferences/SearchProviders.plist"];
     
     NSString *searchString = [[query searchString] stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
-    NSMutableArray *searchResults = [NSMutableArray array];
     NSArray * allSearchProviders = prefs[@"searchProviders"];
     
-    /** Load the enabled search providers from preferences */
-    NSDictionary *enabledProvidersPrefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.wujames.omnisearchprefs.plist"];
+    /** Load the saved preferences */
+    NSArray *enabledSearchProviders = [NSDictionary dictionaryWithContentsOfFile:SAVED_PREFERENCES_PLIST][@"Enabled"];
     
     for(NSDictionary *searchProvider in allSearchProviders) {
         
         NSString *providerName = searchProvider[@"ProviderName"];
         
-        /** filter out disabled search providers, we do it here because somehow PreferenceLoader does not put default value into the plist from PSSwitchCell */
-        if(!enabledProvidersPrefs[providerName] || [enabledProvidersPrefs[providerName] boolValue]) {
+        /** filter out disabled search providers */
+        if([enabledSearchProviders containsObject:providerName]) {
             SPSearchResult *result = [[SPSearchResult alloc] init];
             
             [result setTitle:[@"Search " stringByAppendingString:searchProvider[@"ProviderName"]]];
