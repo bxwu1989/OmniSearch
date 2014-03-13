@@ -2,116 +2,58 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>searchProviders</key>
-	<array>
-		<dict>
-			<key>ProviderName</key>
-			<string>Google Maps</string>
-			<key>QueryString</key>
-			<string>comgooglemaps://?q=%@</string>
-		</dict>
-		<dict>
-			<key>ProviderName</key>
-			<string>Apple Maps</string>
-			<key>QueryString</key>
-			<string>http://maps.apple.com/?q=%@</string>
-		</dict>
-		<dict>
-			<key>ProviderName</key>
-			<string>Cydia</string>
-			<key>QueryString</key>
-			<string>cydia://search/%@</string>
-		</dict>
-		<dict>
-			<key>ProviderName</key>
-			<string>Yelp</string>
-			<key>QueryString</key>
-			<string>yelp:///search?terms=%@</string>
-		</dict>
-		<dict>
-			<key>ProviderName</key>
-			<string>Twitter</string>
-			<key>QueryString</key>
-			<string>twitter://search?query=%@</string>
-		</dict>
-		<dict>
-			<key>ProviderName</key>
-			<string>Instagram Tag</string>
-			<key>QueryString</key>
-			<string>instagram://tag?name=%@</string>
-		</dict>
-		<dict>
-			<key>ProviderName</key>
-			<string>Instagram User</string>
-			<key>QueryString</key>
-			<string>instagram://user?username=%@</string>
-		</dict>
-		<dict>
-			<key>ProviderName</key>
-			<string>App Store</string>
-			<key>QueryString</key>
-			<string>https://search.itunes.apple.com/WebObjects/MZSearch.woa/wa/search?media=software&amp;term=%@</string>
-		</dict>
-		<dict>
-			<key>ProviderName</key>
-			<string>iTunes</string>
-			<key>QueryString</key>
-			<string>http://phobos.apple.com/WebObjects/MZStore.woa/wa/search?term=%@</string>
-		</dict>
-		<dict>
-			<key>ProviderName</key>
-			<string>IMDB</string>
-			<key>QueryString</key>
-			<string>imdb:///find?q=%@</string>
-		</dict>
-		<dict>
-			<key>ProviderName</key>
-			<string>eBay</string>
-			<key>QueryString</key>
-			<string>ebay://www.ebay.com/sch/i.html?_nkw=%@</string>
-		</dict>
-		<dict>
-			<key>ProviderName</key>
-			<string>Spotify</string>
-			<key>QueryString</key>
-			<string>spotify://search/%@</string>
-		</dict>
-		<dict>
-			<key>ProviderName</key>
-			<string>Tumblr Tag</string>
-			<key>QueryString</key>
-			<string>tumblr://x-callback-url/tag?tag=%@</string>
-		</dict>
-		<dict>
-			<key>ProviderName</key>
-			<string>Directions To (Google Maps)</string>
-			<key>QueryString</key>
-			<string>comgooglemaps://?daddr=%@&amp;directionsmode=driving</string>
-		</dict>
-		<dict>
-			<key>ProviderName</key>
-			<string>Directions To (Apple Maps)</string>
-			<key>QueryString</key>
-			<string>http://maps.apple.com/?saddr=Current+Location&amp;daddr=%@</string>
-		</dict>
-		<dict>
-			<key>ProviderName</key>
-			<string>Dictionary</string>
-			<key>QueryString</key>
-			<string>http://m.dictionary.com/definition/%@/?linkId=ibc5yn[</string>
-		</dict>
-		<dict>
-			<key>ProviderName</key>
-			<string>Wikipedia</string>
-			<key>QueryString</key>
-			<string>http://en.wikipedia.org/wiki/%@</string>
-		</dict>
-		<dict>
-			<key>ProviderName</key>
-			<string>Foursquare</string>
-			<key>QueryString</key>
-			<string>foursquare://venues/explore?query=%@</string>
-		</dict>
-	</array>
+	<key>Google Maps</key>
+	<string>comgooglemaps://?q=%@</string>
+
+	<key>Apple Maps</key>
+	<string>http://maps.apple.com/?q=%@</string>
+
+	<key>Cydia</key>
+	<string>cydia://search/%@</string>
+
+	<key>Yelp</key>
+	<string>yelp:///search?terms=%@</string>
+
+	<key>Twitter</key>
+	<string>twitter://search?query=%@</string>
+
+	<key>Instagram Tag</key>
+	<string>instagram://tag?name=%@</string>
+
+	<key>Instagram User</key>
+	<string>instagram://user?username=%@</string>
+
+	<key>App Store</key>
+	<string>https://search.itunes.apple.com/WebObjects/MZSearch.woa/wa/search?media=software&amp;term=%@</string>
+
+	<key>iTunes</key>
+	<string>http://phobos.apple.com/WebObjects/MZStore.woa/wa/search?term=%@</string>
+
+	<key>IMDB</key>
+	<string>imdb:///find?q=%@</string>
+
+	<key>eBay</key>
+	<string>ebay://www.ebay.com/sch/i.html?_nkw=%@</string>
+
+	<key>Spotify</key>
+	<string>spotify://search/%@</string>
+
+	<key>Tumblr Tag</key>
+	<string>tumblr://x-callback-url/tag?tag=%@</string>
+
+	<key>Directions To (Google Maps)</key>
+	<string>comgooglemaps://?daddr=%@&amp;directionsmode=driving</string>
+
+	<key>Directions To (Apple Maps)</key>
+	<string>http://maps.apple.com/?saddr=Current+Location&amp;daddr=%@</string>
+
+	<key>Dictionary</key>
+	<string>http://m.dictionary.com/definition/%@/?linkId=ibc5yn[</string>
+
+	<key>Wikipedia</key>
+	<string>http://en.wikipedia.org/wiki/%@</string>
+
+	<key>Foursquare</key>
+	<string>foursquare://venues/explore?query=%@</string>
 </dict>
 </plist>

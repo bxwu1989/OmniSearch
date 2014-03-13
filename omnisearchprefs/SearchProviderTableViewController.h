@@ -10,6 +10,6 @@
 
 @interface SearchProviderTableViewController : PSViewController <UITableViewDataSource, UITableViewDelegate>
 
-- (UITableView *)tableView;
+- (UITableView *)table;
 
 @end

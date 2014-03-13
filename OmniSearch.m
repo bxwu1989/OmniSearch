@@ -27,31 +27,25 @@
     NSMutableArray *searchResults = [NSMutableArray array];
     
     /** Load the all preconfigured search providers */
-    NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:@"/Library/SearchLoader/Preferences/SearchProviders.plist"];
+    NSDictionary *allSearchProviders = [[NSDictionary dictionaryWithContentsOfFile:@"/Library/SearchLoader/Preferences/SearchProviders.plist"] copy];
     
     NSString *searchString = [[query searchString] stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
-    NSArray * allSearchProviders = prefs[@"searchProviders"];
-    
     /** Load the saved preferences */
-    NSArray *enabledSearchProviders = [NSDictionary dictionaryWithContentsOfFile:SAVED_PREFERENCES_PLIST][@"Enabled"];
+    BOOL prefExists = [[NSFileManager defaultManager] fileExistsAtPath:SAVED_PREFERENCES_PLIST];
     
-    for(NSDictionary *searchProvider in allSearchProviders) {
+    NSArray *enabledSearchProviders = prefExists ? [[NSDictionary dictionaryWithContentsOfFile:SAVED_PREFERENCES_PLIST][@"Enabled"] copy] : [allSearchProviders allKeys];
+    
+    for(NSString *enabledProviderName in enabledSearchProviders) {
+        SPSearchResult *result = [[SPSearchResult alloc] init];
         
-        NSString *providerName = searchProvider[@"ProviderName"];
+        [result setTitle:[@"Search " stringByAppendingString:enabledProviderName]];
         
-        /** filter out disabled search providers */
-        if([enabledSearchProviders containsObject:providerName]) {
-            SPSearchResult *result = [[SPSearchResult alloc] init];
-            
-            [result setTitle:[@"Search " stringByAppendingString:searchProvider[@"ProviderName"]]];
-            
-            NSString *url = [NSString stringWithFormat:searchProvider[@"QueryString"], searchString];
-            
-            [result setUrl:url];
-            
-            [searchResults addObject:result];
-        }
+        NSString *url = [NSString stringWithFormat:allSearchProviders[enabledProviderName], searchString];
+        
+        [result setUrl:url];
+        
+        [searchResults addObject:result];
     }
     
     TLCommitResults(searchResults, TLDomain(@"com.wujames.omnisearch", @"OmniSearch"), results);

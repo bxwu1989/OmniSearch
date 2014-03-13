@@ -1,6 +1,6 @@
 //
 //  SearchProviderTableViewController.m
-//  OrderedTableViewDemo
+//  OmniSearch
 //
 //  Created by James Wu on 3/9/14.
 //  Copyright (c) 2014 James Wu. All rights reserved.
@@ -13,14 +13,12 @@
 #define DISABLED_SEARCH_PROVIDERS_SECTION 1
 #define ALL_SEARCH_PROVIDERS_PLIST @"Library/SearchLoader/Preferences/SearchProviders.plist"
 #define SAVED_PREFERENCES_PLIST @"/var/mobile/Library/Preferences/com.wujames.omnisearchprefs.plist"
-
-#define kCCLoaderSettingsPath [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"Preferences/com.wujames.omnisearchprefs.plist"]
-
+#define APP_VERSION @"0.5"
 
 @interface SearchProviderTableViewController ()
 
-@property (nonatomic, strong) NSMutableArray * enabledSearchProviders;
-@property (nonatomic, strong) NSMutableArray * disabledSearchProviders;
+@property (nonatomic, strong) NSMutableOrderedSet * enabledSearchProviders;
+@property (nonatomic, strong) NSMutableOrderedSet * disabledSearchProviders;
 
 @end
 
@@ -31,7 +29,6 @@
 @synthesize disabledSearchProviders = _disabledSearchProviders;
 
 - (instancetype)init {
-    NSLog(@"init called");
     
     self = [super init];
     if(self) {
@@ -44,22 +41,20 @@
 {
     [super viewDidLoad];
     
-    [self.tableView setAllowsSelectionDuringEditing:YES];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    [self.table setAllowsSelectionDuringEditing:YES];
+    [self.table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     
-    [self.tableView setEditing:YES];
-    NSLog(@"ViewDidLoad called with following providers: enabled = %@ disabled = %@", self.enabledSearchProviders, self.disabledSearchProviders);
+    [self.table setEditing:YES];
 }
 
 
-- (UITableView *) tableView
+- (UITableView *) table
 {
     return (UITableView *)self.view;
 }
 
 
 - (void)loadView {
-    NSLog(@"Load view called");
     UITableView *tableView = [[UITableView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame style:UITableViewStyleGrouped];
     
     tableView.dataSource = self;
@@ -91,7 +86,6 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"# of rows called");
     if(section == ENABLED_SEARCH_PROVIDERS_SECTION) {
         return [self.enabledSearchProviders count];
     } else if(section == DISABLED_SEARCH_PROVIDERS_SECTION) {
@@ -122,10 +116,30 @@
 }
 
 - (void) tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-    NSString * sourceProvider = [self getSearchProviderNameForIndexPath:sourceIndexPath];
-    [self insertSearchProvider:sourceProvider AtIndexPath:destinationIndexPath];
-
-    [self removeSearchProviderAtIndexPath:sourceIndexPath];
+    
+    NSString * providerToMove = [[self getSearchProviderNameForIndexPath:sourceIndexPath] copy];
+    
+    if(sourceIndexPath.section == destinationIndexPath.section) {
+        if(sourceIndexPath.section == ENABLED_SEARCH_PROVIDERS_SECTION) {
+            [self.enabledSearchProviders removeObjectAtIndex:sourceIndexPath.row];
+            if(destinationIndexPath.row > (self.enabledSearchProviders.count - 1)) {
+                [self.enabledSearchProviders addObject:providerToMove];
+            } else {
+                [self.enabledSearchProviders insertObject:providerToMove atIndex:destinationIndexPath.row];
+            }
+            
+        } else if(sourceIndexPath.section == DISABLED_SEARCH_PROVIDERS_SECTION) {
+            [self.disabledSearchProviders removeObjectAtIndex:sourceIndexPath.row];
+            if(destinationIndexPath.row > (self.enabledSearchProviders.count - 1)) {
+                [self.disabledSearchProviders addObject:providerToMove];
+            } else {
+                [self.disabledSearchProviders insertObject:providerToMove atIndex:destinationIndexPath.row];
+            }
+        }
+    } else {
+        [self insertSearchProvider:providerToMove AtIndexPath:destinationIndexPath];
+        [self removeSearchProviderAtIndexPath:sourceIndexPath];
+    }
     [self savePrefs];
 }
 
@@ -154,13 +168,17 @@
 
 - (void) insertSearchProvider:(NSString *)providerName AtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.section == ENABLED_SEARCH_PROVIDERS_SECTION) {
-        [self.enabledSearchProviders insertObject:providerName atIndex:indexPath.row];
-        NSLog(@"Completed Inserting into enabled");
-
+        if(!self.enabledSearchProviders.count) {
+            [self.enabledSearchProviders addObject:providerName];
+        } else {
+            [self.enabledSearchProviders insertObject:providerName atIndex:indexPath.row];
+        }
     } else if(indexPath.section == DISABLED_SEARCH_PROVIDERS_SECTION) {
-        [self.disabledSearchProviders insertObject:providerName atIndex:indexPath.row];
-        NSLog(@"Completed Inserting into disabled");
-
+        if(!self.disabledSearchProviders.count) {
+            [self.disabledSearchProviders addObject:providerName];
+        } else {
+            [self.disabledSearchProviders insertObject:providerName atIndex:indexPath.row];
+        }
     }
 }
 
@@ -169,52 +187,49 @@
     /** load from saved preferences or if it doesn't exist, enable all */
     NSDictionary *savedPreferences = [NSDictionary dictionaryWithContentsOfFile:SAVED_PREFERENCES_PLIST];
     
-    if(![savedPreferences valueForKey:@"Initialized"]) {
+    /* if preferences do not exist or if the version has changed, we will reload the preferences */
+    NSString *version = [savedPreferences valueForKey:@"Version"];
+    
+    if(!version || ![version isEqualToString:APP_VERSION]) {
         [self loadPrefsForFirstTime];
         [self savePrefs];
     } else {
-        self.enabledSearchProviders = [savedPreferences[@"Enabled"] mutableCopy];
-        self.disabledSearchProviders = [savedPreferences[@"Disabled"] mutableCopy];
+        self.enabledSearchProviders = [NSMutableOrderedSet orderedSetWithArray:savedPreferences[@"Enabled"]];
+        self.disabledSearchProviders = [NSMutableOrderedSet orderedSetWithArray:savedPreferences[@"Disabled"]];
     }
-
-    NSLog(@"Loaded prefs enabled: %@, disabled: %@", self.enabledSearchProviders, self.disabledSearchProviders);
-
 }
 
 - (void) savePrefs {
-    
-    
     NSMutableDictionary *prefs = [NSMutableDictionary dictionary];
     
-    prefs[@"Enabled"] = self.enabledSearchProviders;
-    prefs[@"Disabled"] = self.disabledSearchProviders;
+    prefs[@"Enabled"] = self.enabledSearchProviders.array;
+    prefs[@"Disabled"] = self.disabledSearchProviders.array;
     
-    prefs[@"Initialized"] = @"Done";
+    prefs[@"Version"] = APP_VERSION;
     
-    [prefs.copy writeToFile:kCCLoaderSettingsPath atomically:YES];
-    
+    [prefs.copy writeToFile:SAVED_PREFERENCES_PLIST atomically:YES];
 }
 
 - (void) loadPrefsForFirstTime {
     
     /** load all the available providers */
-    NSArray * allSearchProviders = [NSDictionary dictionaryWithContentsOfFile:ALL_SEARCH_PROVIDERS_PLIST][@"searchProviders"];
+    NSDictionary * allSearchProviders = [NSDictionary dictionaryWithContentsOfFile:ALL_SEARCH_PROVIDERS_PLIST];
     
-    for(NSDictionary *searchProvider in allSearchProviders) {
-        [self.enabledSearchProviders addObject:[searchProvider[@"ProviderName"] copy]];
+    for(NSString *searchProvider in [allSearchProviders allKeys]) {
+        [self.enabledSearchProviders addObject:[searchProvider copy]];
     }
 }
 
-- (NSMutableArray *) enabledSearchProviders {
+- (NSMutableOrderedSet *) enabledSearchProviders {
     if(!_enabledSearchProviders) {
-        _enabledSearchProviders = [[NSMutableArray alloc] init];
+        _enabledSearchProviders = [[NSMutableOrderedSet alloc] init];
     }
     return _enabledSearchProviders;
 }
 
-- (NSMutableArray *) disabledSearchProviders {
+- (NSMutableOrderedSet *) disabledSearchProviders {
     if(!_disabledSearchProviders) {
-        _disabledSearchProviders = [[NSMutableArray alloc] init];
+        _disabledSearchProviders = [[NSMutableOrderedSet alloc] init];
     }
     return _disabledSearchProviders;
 }
